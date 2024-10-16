@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("form1");
+        const alertBox = document.querySelector(".alert-box .alert");
+        const resetModal = document.getElementById('resetModal');
+        const registerButton = document.getElementById('registerbutton');
+        const confirmReset = document.getElementById('confirmReset');
+        const cancelReset = document.getElementById('cancelReset');
+        const closeModal = document.querySelector('.close');
+        document.getElementById("golbalError").innerText='';
+
+
+        // Show reset modal when register button is clicked
+        function Modalconfirm (){
+            resetModal.style.display = "block"; // Show the modal
+        }
+
+        // When confirmReset button is clicked
+        confirmReset.addEventListener('click', function() {
+            // You can handle what happens when the user confirms here.
+            resetModal.style.display = "none"; // Hide the modal
+            showAlert("Registration Successful!", "success"); // Show success alert
+        });
+
+        // When cancelReset button is clicked
+        cancelReset.addEventListener('click', function() {
+            resetModal.style.display = "none"; // Hide the modal
+        });
+
+        // Close modal when clicking the 'x'
+        closeModal.addEventListener('click', function() {
+            resetModal.style.display = "none"; // Hide the modal
+        });
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get values from input fields
+            const name = document.querySelector(".name").value.trim();
+            console.log(name)
+            const email = document.querySelector(".email").value.trim();
+            const password = document.querySelector(".password").value.trim();
+
+            // Simple validation
+            if (name === "" || email === "" || password === "") {
+                showAlert("Please fill in all fields.","error");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showAlert("Please enter a valid email address.", "error");
+                return;
+            }
+            if (password.length < 8) {
+                showAlert("Password must be at least 8 characters long.", "error");
+                document.getElementById('passwordError').style.display = 'block';
+                return;
+            }
+
+            // If all validations pass, show success message
+            Modalconfirm();
+        });
+
+     
+
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
+            return regex.test(email);
+        }
+        function showAlert(message, type) {
+
+    const alertBox = document.getElementById("alertb");
+    const alertm=document.getElementById("alertm")
+
+    alertm.innerText = message; // Set the message
+    alertBox.className = `alert ${type}`; // Add the appropriate class (success/error)
+    alertBox.style.display = "block"; // Make the alert visible
+
+    // Automatically hide alert after 3 seconds
+    setTimeout(() => {
+        alertBox.style.display = "none";
+    }, 3000);
+}
+
+    });
+    </script>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url('pexels-pixabay-325876.jpg'); /* Add your image path here */
+    background-size: cover; /* Cover the entire screen */
+    background-position: center; /* Center the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: rgb(152, 62, 62); /* Change text color if needed for better contrast */
+}
+
+.form {
+    background-color: rgba(255, 255, 255, 0.902); /* Slightly transparent background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.heading {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.alert-box {
+    display: none; /* Hidden by default */
+    margin: 10px 0;
+    position: relative;
+}
+
+.alert {
+    padding: 1px;
+    border-radius: 5px;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.modal {
+display: none; 
+position: fixed;
+z-index: 1; 
+left: 0;
+top: 0;
+width: 100%; 
+height: 100%;
+overflow: auto;
+background-color: rgba(0, 0, 0, 0.5); 
+}
+.modal-content {
+background-color: #fefefe;
+margin: 15% auto; 
+padding: 20px;
+border: 1px solid #888;
+width: 80%; 
+max-width: 400px; 
+}
+    </style>
+</head>
+<body>
+
+    <div class="form">
+    <form id="form1">
+        <h1 class="heading">Register</h1>
+        <input type="text" placeholder="name" autocomplete="off" class="name" >
+        <input type="email" placeholder="email" autocomplete="off" class="email" >
+        <input type="password" placeholder="password" autocomplete="off" class="password">
+        <button id="registerbutton" class="submit-btn" type="submit">register</button>
+        <a href="Login.html" class="link">already have an account ? log in here</a>
+        
+    </form>
+    <div class="alert-box" id="alertb">
+        <p class="alert" id="alertm"></p>
+    </div>
+</div>
+    <p class="golbalError" id="golbalError"></p>
+
+    <div id="resetModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Confirmation</h2>
+            <p>Are you sure you want to confirm your credentials?</p><br>
+            <button id="confirmReset" style="width: 100px;">Yes</button>
+            <button id="cancelReset" style="width: 100px;">No</button>
+        </div>
+    </div>
+
+    <!-- <script src="js/form.js"></script> -->
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

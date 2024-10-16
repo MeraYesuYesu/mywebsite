@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".form");
+        const alertBox = document.getElementById("alertb");
+        const alertm=document.getElementById("alertm")
+        const modal = document.getElementById("modal");
+        const closeModalBtn = document.querySelector(".close-btn");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent default form submission
+            // Get values from input fields
+            const email = document.querySelector(".email").value.trim();
+            const password = document.querySelector(".password").value.trim();
+
+            // Simple validation
+            if (email === "" || password === "") {
+                showAlert("Please fill in all fields.", "error");
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showAlert("Please enter a valid email address.", "error");
+                document.getElementById('emailError').style.display = 'block';
+                return;
+            }
+
+            if (password.length < 8) {
+                showAlert("Password must be at least 8 characters long.", "error");
+                document.getElementById('passwordError').style.display = 'block';
+                return;
+            }
+
+            // Show modal on successful login
+            modal.style.display = "flex";
+        });
+
+        closeModalBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        function showAlert(message, type) {
+            alertm.innerText = message;
+            alertBox.className = `alert ${type}`;
+            alertBox.style.display = "block";
+
+            // Automatically hide alert after 3 seconds
+            setTimeout(() => {
+                alertBox.style.display = "none";
+            }, 3000);
+        }
+
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
+            return regex.test(email);
+        }
+    });
+    </script>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-image: url('pexels-pixabay-325876.jpg');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: rgb(152, 62, 62);
+    }
+
+    .error {
+        color: red;
+        font-size: 12px;
+        display: none;
+    }
+
+    .form {
+        background-color: rgba(255, 255, 255, 0.902);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    .heading {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input:focus {
+        border-color: #007BFF;
+        outline: none;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .submit-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    .link:hover {
+        text-decoration: underline;
+    }
+
+    .alert-box {
+        display: none;
+        margin: 10px 0;
+    }
+
+    .alert {
+        padding: 1px;
+        border-radius: 5px;
+    }
+
+    .alert.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .alert.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Modal styles */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .close-btn {
+        background-color: red;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .close-btn:hover {
+        background-color: darkred;
+    }
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="form">
+        <form>
+        <h1 class="heading">Login</h1>
+        <input type="email" placeholder="email" autocomplete="off" class="email" >
+        <small class="error" id="emailError"></small>
+        <input type="password" placeholder="password" autocomplete="off" class="password" >
+        <small class="error" id="passwordError"></small>
+        <button class="submit-btn" type="submit">log in</button>
+        <a href="Register.html" class="link">don't have an account? Register one</a>
+        <div class="alert-box" id="alertb">
+            <p class="alert" id="alertm"></p>
+        </div>
+    </form>
+    </div>
+
+    <!-- Modal HTML -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>Login successful!</p>
+            <button class="close-btn">Close</button>
+        </div>
+    </div>
+
+  
+
+</body>
+</html>
